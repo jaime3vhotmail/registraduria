@@ -37,6 +37,7 @@ function callCORS(url) {
 				  data: {},
 				  dataType: "json",
 				  contentType: 'text/html',
+				  crossDomain: true,
 				  success: function (data) { 
 					 
 					  document.getElementById('lblJSON').innerHTML = JSON.stringify(data);
