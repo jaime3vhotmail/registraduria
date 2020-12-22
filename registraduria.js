@@ -10,6 +10,50 @@ $(document).ready(function(){
 
 function callCORS(url) {
     var resp ="";
+	document.getElementById('lblXHR').innerHTML ='';
+	 var xhr;
+    try{
+        xhr = new XMLHttpRequest();
+		document.getElementById('lblXHR').innerHTML ='XMLHttpRequest';
+		
+		
+		
+    }catch (e){
+        try{
+            xhr = new XDomainRequest();
+			document.getElementById('lblXHR').innerHTML ='XDomainRequest';
+        } catch (e){
+            try{
+                xhr = new ActiveXObject('Msxml2.XMLHTTP');
+				document.getElementById('lblXHR').innerHTML ='Msxml2.XMLHTTP';
+            }catch (e){
+                try{
+                    xhr = new ActiveXObject('Microsoft.XMLHTTP');
+					document.getElementById('lblXHR').innerHTML ='Microsoft.XMLHTTP';
+                }catch (e){
+                     document.getElementById('lblXHR').innerHTML ='Ex ActiveXObject Microsoft.XMLHTTP'                        
+                }
+            }
+        }			
+    }
+	
+	if (xhr){
+			 try
+			 {
+				xhr.open('GET', url, false);
+				xhr.send(null);
+				if (xhr.status == 200)
+				{
+				  document.getElementById('lblXHRResponse').innerHTML=xhr.responseText;
+				}
+			 }catch(error2)
+			 {
+				 document.getElementById('lblXHRError').innerHTML = error2;
+			 }
+			 
+		}		
+	
+	
 	try {
 		
 		var msie=detectIE();
@@ -33,11 +77,11 @@ function callCORS(url) {
 				  $.ajax({
 				  type: 'GET',
 				  url: url,
+				  headers: {},				 
 				  processData: true,
 				  data: {},
 				  dataType: "json",
-				  contentType: 'text/html',
-				  crossDomain: true,
+				  contentType: 'text/html',				  
 				  success: function (data) { 
 					 
 					  document.getElementById('lblJSON').innerHTML = JSON.stringify(data);
