@@ -8,6 +8,7 @@ $(document).ready(function(){
 });
 
 
+
 function callCORS(url) {
     var resp ="";
 	document.getElementById('lblXHR').innerHTML ='';
@@ -40,20 +41,23 @@ function callCORS(url) {
 	if (xhr){
 			 try
 			 {
+				 function func(){
+						document.getElementById('lblXHRResponseOnload').innerHTML =this.response;						
+					}
+				 
 				xhr.open('GET', url, false);
-				xhr.send(null);
-				if (xhr.status == 200)
-				{
-				  document.getElementById('lblXHRResponse').innerHTML=xhr.responseText;
-				}
+				xhr.setRequestHeader('Content-Type', 'application/json');
+				xhr.onload = func;	
+				xhr.onerror = function () {
+					document.getElementById('lblXHRError').innerHTML = xhr.responseText;
+				  };				
+				//xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); 
+				xhr.send(null);				
 			 }catch(error2)
 			 {
-				 document.getElementById('lblXHRError').innerHTML = error2;
-			 }
-			 
-		}		
-	
-	
+				 document.getElementById('lblXHRErrorEx').innerHTML = error2;
+			 }			 
+		}
 	try {
 		
 		var msie=detectIE();
