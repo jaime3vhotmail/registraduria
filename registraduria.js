@@ -3,7 +3,7 @@
 $(document).ready(function(){
     var  currentDate = new Date();
     var strDate = currentDate.getFullYear().toString()+currentDate.getMonth().toString()+currentDate.getDay().toString()+currentDate.getHours().toString()+currentDate.getMinutes().toString()+currentDate.getSeconds().toString()+currentDate.getMilliseconds().toString(); 
-	var url2='http://localhost:8181/' + strDate;
+	var url2='http://127.0.0.1:8181/' + strDate;
 	callCORS(url2);
 });
 
