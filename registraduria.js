@@ -3,7 +3,7 @@
 $(document).ready(function(){
     var  currentDate = new Date();
     var strDate = currentDate.getFullYear().toString()+currentDate.getMonth().toString()+currentDate.getDay().toString()+currentDate.getHours().toString()+currentDate.getMinutes().toString()+currentDate.getSeconds().toString()+currentDate.getMilliseconds().toString(); 
-	var url2='http://127.0.0.1:8181/' + strDate;
+	var url2='http://localhost:8181/' + strDate + "&jsoncallback=";
 	callCORS(url2);
 });
 
@@ -78,8 +78,11 @@ function callCORS(url) {
 			};
 			xdr.send();
 		} else {
+			      var xhrSupported = jQuery.ajaxSettings.xhr();
+				  $.support.cors = !!xhrSupported && ( "withCredentials" in xhrSupported );
 				  $.ajax({
 				  type: 'GET',
+				  crossDomain: true,
 				  url: url,
 				  headers: {},				 
 				  processData: true,
@@ -94,6 +97,13 @@ function callCORS(url) {
 					document.getElementById('lblError').innerHTML = "Error al obtener IP y MAC: " + jqXHR.status + " " + textStatus + " " + errorThrown;
 				  }
 				  });
+				  
+				  $.get(url, function(data,status){
+							  document.getElementById('lblGET').innerHTML = "Data: " + data + "status:" + status;
+							});
+											  
+				   
+				  
 		}
 	} catch (error2) {
 		  document.getElementById('lblError').innerHTML = error2;
